@@ -1,0 +1,16 @@
+/*
+#sp_gallery {
+    display: none !important;
+}
+*/
+
+/*#sp_preview {*/
+/*    display: block;*/
+/*}*/
+
+/*
+ * Prevent progressbar to randomly flicker
+ */
+#sp_progressbar .min-h-\[6rem\] {
+    min-height: auto;
+}
