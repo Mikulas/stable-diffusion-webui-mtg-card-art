@@ -127,6 +127,7 @@ def outpaint(cardname, artist, prompt, image, preprocessor, preprocessor_scale, 
     if cardname == '':
         return # TODO error
 
+    proxyshop_enabled = False
     batch_count = 1
     batch_size = 1
 
@@ -417,13 +418,15 @@ def outpaint(cardname, artist, prompt, image, preprocessor, preprocessor_scale, 
 
     extra_images = []
     for image in all_images:
-        # overlayAlignment = Image.open("extensions/mtg_card_art/overlay-alignment.png")
-        # previewAlignment = overlay(image, overlayAlignment)
-        # overlayCrop = Image.open("extensions/mtg_card_art/overlay-crop.png")
-        # previewCrop = overlay(image, overlayCrop)
-        # extra_images = extra_images + [previewAlignment, previewCrop]
-        render = proxyshop.run(image, card['name'], card['artist'])
-        extra_images = extra_images + [render]
+        if proxyshop_enabled:
+            render = proxyshop.run(image, card['name'], card['artist'])
+            extra_images = extra_images + [render]
+        else:
+            overlayAlignment = Image.open("extensions/mtg_card_art/overlay-alignment.png")
+            previewAlignment = overlay(image, overlayAlignment)
+            overlayCrop = Image.open("extensions/mtg_card_art/overlay-crop.png")
+            previewCrop = overlay(image, overlayCrop)
+            extra_images = extra_images + [previewAlignment, previewCrop]
 
     all_images = all_images + extra_images
 
